@@ -1,7 +1,10 @@
 @extends('layout.master')
 @section('page-specific-css')
-  <!-- Custom styles for this page -->
+<!-- Custom styles for this page -->
+  <!-- DATATABLES -->
   <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <!-- SWEET-DELETE -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.0.7/sweetalert2.min.css" rel="stylesheet">
 @endsection
 @section('content')
     <!-- Breadcrumb -->
@@ -23,9 +26,9 @@
     @if(session('record-deleted'))
       <div class="alert alert-danger">{{session('record-deleted')}}</div>    
     @elseif(session('record-created'))
-    <div class="alert alert-success">{{session('record-created')}}</div>   
+      <div class="alert alert-success">{{session('record-created')}}</div>   
     @elseif(session('record-updated'))
-    <div class="alert alert-success">{{session('record-updated')}}</div> 
+      <div class="alert alert-success">{{session('record-updated')}}</div> 
     @endif
       <div class="container-fluid">
           <!-- DataTables -->
@@ -51,6 +54,7 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @if(gettype($districts) != "string")
                     @foreach($districts as $district)
                     <tr>
                       <td>{{$district->name}}</td>
@@ -60,12 +64,15 @@
                         <form class="d-inline" method="POST" action="{{route('district.destroy',$district->id)}}" enctype="multipart/form-data">
                           @csrf
                           @method('DELETE')
-                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                          <button type="submit" class="btn btn-danger btn-sm show-alert-delete-box">Delete</button>
                         </form>
                         <!-- <a href="" class="btn btn-danger btn-sm">Delete</a> -->
                       </td>
                     </tr>
                     @endforeach
+                    @else
+                    <tr><td>{{$districts}}</td></tr>
+                    @endif
                   </tbody>
                 </table>
               </div>
@@ -79,14 +86,39 @@
   <!-- Page level plugins -->
   <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-  <!-- Page level custom scripts -->
+<!-- Page level custom scripts -->
+  <!-- DATATABLES -->
   <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
   <script>
     $( document ).ready(function() {
         $("#viewDistrict").addClass("active");
         $("#collapsePages").removeClass("show");
         $("#collapseTwo").toggleClass("show");
+    });
+  </script>
+
+  <!-- SWEET-DELETE -->
+  <script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Are you sure you want to delete this record?",
+            text: "If you delete this, it will be gone forever.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Cancel","Yes!"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
     });
 </script>
 @endsection

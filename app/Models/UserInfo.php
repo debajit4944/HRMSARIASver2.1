@@ -10,7 +10,6 @@ class UserInfo extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'phno',
         'gender',
         'addr',
         'pincode',
@@ -31,5 +30,8 @@ class UserInfo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function district(){
+        return $this->belongsTo(District::class);
     }
 }

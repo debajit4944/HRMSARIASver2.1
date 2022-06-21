@@ -17,11 +17,11 @@ class UserInfoFactory extends Factory
      */
     public function definition()
     {
+        //$users = User::where('role', '<' ,'4')->get('id');
         $users = User::all();
         return [
             'user_id' => $this->faker->unique()->numberBetween(1, $users->count()),
-            'phno' => $this->faker->phoneNumber(),
-            'gender'=>$this->faker->numberBetween(0, 3),
+            'gender'=>$this->faker->numberBetween(1, 3),
             'addr'=> $this->faker->address(),
             'pincode'=> $this->faker->postcode(),
             'state'=> $this->faker->state(),
@@ -35,8 +35,8 @@ class UserInfoFactory extends Factory
             'doj'=>$this->faker->date('Y_m_d'),
             'designation_id'=>$this->faker->numberBetween(0, 3),
             'category_id'=>$this->faker->numberBetween(0, 3),
-            'organisation_id'=>$this->faker->numberBetween(0, 3),
-            'district_id'=>$this->faker->numberBetween(0, 3),
+            'organisation_id'=>$this->faker->numberBetween(1, 25),
+            'district_id'=>$this->faker->numberBetween(1, 25),
             'created_at' => now(),
         ];
     }

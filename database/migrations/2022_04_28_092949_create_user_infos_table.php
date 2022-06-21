@@ -15,24 +15,23 @@ return new class extends Migration
     {
         Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('phno');
-            $table->string('gender');
-            $table->string('addr');
-            $table->string('pincode');
-            $table->string('state');
-            $table->string('addrdistrict');
-            $table->date('dob');
-            $table->string('idtype');
-            $table->string('idno');
-            $table->string('ifsccode');
-            $table->string('bankaccno');
-            $table->bigInteger('project_id');
-            $table->date('doj');
-            $table->bigInteger('designation_id');
-            $table->bigInteger('category_id');
-            $table->bigInteger('organisation_id');
-            $table->bigInteger('district_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('gender')->nullable();
+            $table->string('addr')->nullable();
+            $table->string('pincode')->nullable();
+            $table->string('state')->nullable();
+            $table->string('addrdistrict')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('idtype')->nullable();
+            $table->string('idno')->nullable();
+            $table->string('ifsccode')->nullable();
+            $table->string('bankaccno')->nullable();
+            $table->bigInteger('project_id')->nullable();
+            $table->date('doj')->nullable();
+            $table->bigInteger('designation_id')->nullable();
+            $table->bigInteger('category_id')->nullable();
+            $table->bigInteger('organisation_id')->nullable();
+            $table->bigInteger('district_id')->nullable();
             $table->timestamps();
         });
     }

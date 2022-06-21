@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         //Call the UserFactory
         \App\Models\User::factory(10)->create();
         //Call the UserInfoFactory
-        \App\Models\UserInfo::factory(5)->create();
+        \App\Models\UserInfo::factory(10)->create();
         //Call the DistrictSeeder
         $this->call(DistrictSeeder::class);
         //Call the DesignationSeeder

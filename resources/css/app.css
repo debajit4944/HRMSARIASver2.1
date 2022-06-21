@@ -10996,3 +10996,9 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+/* Jquery Validator Error Message Styles */
+.error {
+  color: #dc3545;
+  font-size: 14px;
+  width:100%;
+}

@@ -23,7 +23,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('secret'), // password
             'remember_token' => Str::random(10),
-            'role'=> 0,
+            'role'=> $this->faker->numberBetween(1, 3),
+            'phno' => $this->faker->phoneNumber(),
         ];
     }
 

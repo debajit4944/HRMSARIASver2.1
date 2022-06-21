@@ -25,8 +25,9 @@ Route::get('/admin', function () {
     return view('admin.index');
 });
 
-Route::resource('admin/user', AdminUserController::class);
+// Route::resource('admin/user', AdminUserController::class);
 
+Route::resource('admin_users', AdminUserController::class);
 // Route::get('/admin/user/create', function () {
 //     return view('admin.user.create');
 // });

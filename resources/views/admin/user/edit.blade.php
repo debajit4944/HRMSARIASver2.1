@@ -12,8 +12,9 @@
             <li class="breadcrumb-item active" aria-current="page">Create New User</li>
         </ol>
     </nav>
-    <form method="POST" action="{{route('admin_users.store')}}" id="userRegForm">
-        {{ csrf_field() }}
+    <form method="POST" action="{{route('admin_users.update', $user->id)}}" id="userRegForm">
+        @csrf
+        @method('PATCH')
         <div class="card shadow mb-4" id="card1">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">User Details <span class="text-danger">(Mandatory)</span></h6>
@@ -24,7 +25,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3 has-success">
                             <label for="name" class="control-label">Name</label>
-                            <input type="text" id="name" name="name" class="form-control" value="{{old('name')}}">
+                            <input type="text" id="name" name="name" class="form-control" value="{{old('name',$user->name)}}">
                             @error('name')
                                 <p class="text-danger text-xs mt-1">{{$message}}</p>
                             @enderror
@@ -33,7 +34,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="email" class="control-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" value="{{old('email')}}">
+                            <input type="email" id="email" name="email" class="form-control" value="{{old('email',$user->email)}}">
                             @error('email')
                                 <p class="text-danger text-xs mt-1">{{$message}}</p>
                             @enderror
@@ -42,7 +43,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="password" class="control-label">Password</label>
-                            <input type="password" id="password" name="password" class="form-control" value="{{old('password')}}">
+                            <input type="password" id="password" name="password" class="form-control" value="{{old('password',$user->password)}}">
                             @error('password')
                                 <p class="text-danger text-xs mt-1">{{$message}}</p>
                             @enderror
@@ -51,13 +52,13 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="password2" class="control-label">Confirm Password</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}">
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" value="{{old('password_confirmation',$user->password)}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="phno" class="control-label">Phone Number</label>
-                            <input type="text" id="phno" name="phno" class="form-control" value="{{old('phno')}}">
+                            <input type="text" id="phno" name="phno" class="form-control" value="{{old('phno',$user->phno)}}">
                             @error('phno')
                                 <p class="text-danger text-xs mt-1">{{$message}}</p>
                             @enderror
@@ -67,10 +68,10 @@
                         <div class="form-group mb-3">
                         <label for="role" class="control-label">Role (Portal)</label>
                             <select class="form-control" id="role" name="role" aria-label=".form-select">
-                                <option value="4" @selected(old('role')==4)>Guest</option>
-                                <option value="1" @selected(old('role')==1)>Employee</option>
-                                <option value="2" @selected(old('role')==2)>Admin</option>
-                                <option value="3" @selected(old('role')==3)>Super Admin</option>
+                                <option value="4" {{old('role', $user->role) == 4 ? 'selected' : ''}}>Guest</option>
+                                <option value="1" {{old('role', $user->role) == 1 ? 'selected' : ''}}>Employee</option>
+                                <option value="2" {{old('role', $user->role) == 2 ? 'selected' : ''}}>Admin</option>
+                                <option value="3" {{old('role', $user->role) == 3 ? 'selected' : ''}}>Super Admin</option>
                             </select>
                         </div>
                         @error('role')
@@ -91,10 +92,9 @@
                         <div class="form-group mb-3">
                         <label for="gender" class="control-label">Gender</label>
                             <select class="form-control" id="genderId" name="gender" aria-label=".form-select">
-                                <option selected value="">Select Gender</option>
-                                <option value="1" @selected(old('gender')=="1")>Male</option>
-                                <option value="2" @selected(old('gender')=="2")>Female</option>
-                                <option value="3" @selected(old('gender')=="3")>Other</option> -->
+                                <option value="1" {{old('gender', $user->userinfo->gender) == 1 ? 'selected' : ''}}>Male</option>
+                                <option value="2" {{old('gender', $user->userinfo->gender) == 2 ? 'selected' : ''}}>Female</option>
+                                <option value="3" {{old('gender', $user->userinfo->gender) == 3 ? 'selected' : ''}}>Other</option> -->
                             </select>
                         </div>
                         @error('gender')
@@ -104,13 +104,13 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="dob" class="control-label">Date Of Birth</label>
-                            <input type="date" id="dob" name="dob" class="form-control" value="{{old('dob')}}">
+                            <input type="date" id="dob" name="dob" class="form-control" value="{{old('dob',$user->userinfo->dob)}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="addr" class="control-label">Address</label>
-                            <input type="text" id="addr" name="addr" class="form-control" value="{{old('addr')}}">
+                            <input type="text" id="addr" name="addr" class="form-control" value="{{old('addr',$user->userinfo->addr)}}">
                         </div>
                         @error('addr')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -119,19 +119,19 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="addrdistrict" class="control-label">District</label>
-                            <input type="text" id="addrdistrict" name="addrdistrict" class="form-control" value="{{old('addrdistrict')}}">
+                            <input type="text" id="addrdistrict" name="addrdistrict" class="form-control" value="{{old('addrdistrict',$user->userinfo->addrdistrict)}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="state" class="control-label">State</label>
-                            <input type="text" id="state" name="state" class="form-control" value="{{old('state')}}">
+                            <input type="text" id="state" name="state" class="form-control" value="{{old('state',$user->userinfo->state)}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="pincode" class="control-label">Pin Code</label>
-                            <input type="text" id="pincode" name="pincode" class="form-control" value="{{old('pincode')}}">
+                            <input type="text" id="pincode" name="pincode" class="form-control" value="{{old('pincode',$user->userinfo->pincode)}}">
                         </div>
                         @error('pincode')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -141,9 +141,9 @@
                         <div class="form-group mb-3">
                         <label for="idtype" class="control-label">ID Type</label>
                             <select class="form-control" id="idType" name="idtype" aria-label=".form-select">
-                                <option selected value="">Select ID Type</option>
-                                <option value="1" @selected(old('idtype')=="1")>Adhaar</option>
-                                <option value="2" @selected(old('idtype')=="2")>PAN</option>
+                                <option value="0" {{old('idtype', $user->userinfo->idtype) == 0 ? 'selected' : ''}}>Select ID Type</option>
+                                <option value="1" {{old('idtype', $user->userinfo->idtype) == 1 ? 'selected' : ''}}>Adhaar</option>
+                                <option value="2" {{old('idtype', $user->userinfo->idtype) == 2 ? 'selected' : ''}}>PAN</option>
                             </select>
                         </div>
                         @error('idtype')
@@ -153,7 +153,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="idno" class="control-label">Unique ID Number</label>
-                            <input type="text" id="idNo" name="idno" class="form-control" value="{{old('idno')}}">
+                            <input type="text" id="idNo" name="idno" class="form-control" value="{{old('idno',$user->userinfo->idno)}}">
                         </div>
                         @error('idno')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -162,7 +162,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="ifsccode" class="control-label">Bank IFSC Code</label>
-                            <input type="text" id="ifscCode" name="ifsccode" class="form-control" value="{{old('ifsccode')}}">
+                            <input type="text" id="ifscCode" name="ifsccode" class="form-control" value="{{old('ifsccode',$user->userinfo->ifsccode)}}">
                         </div>
                         @error('ifsccode')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -171,7 +171,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="bankaccno" class="control-label">Bank Account No </label>
-                            <input type="text" id="bankAccNo" name="bankaccno" class="form-control" value="{{old('bankaccno')}}">
+                            <input type="text" id="bankAccNo" name="bankaccno" class="form-control" value="{{old('bankaccno',$user->userinfo->bankaccno)}}">
                         </div>
                         @error('bankaccno')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -193,7 +193,7 @@
                             <select class="form-control" id="projectId" name="project_id" aria-label=".form-select">
                                 <option selected value="">Select Project</option>
                                 @foreach($projects as $project)
-                                    <option value="{{$project->id}}" @selected(old('project_id')==$project->id)>{{$project->name}}</option>
+                                    <option value="{{$project->id}}" {{old('project_id', $user->userinfo->project_id) == $project->id ? 'selected' : ''}}>{{$project->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -204,7 +204,7 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label for="doj" class="control-label">Date of Joining</label>
-                            <input type="date" id="doj" name="doj" class="form-control" value="{{old('doj')}}">
+                            <input type="date" id="doj" name="doj" class="form-control" value="{{old('doj',$user->userinfo->doj)}}">
                         </div>
                         @error('doj')
                             <p class="text-danger text-xs mt-1">{{$message}}</p>
@@ -216,7 +216,7 @@
                             <select class="form-control" id="organisationId" name="organisation_id" aria-label=".form-select">
                                 <option selected value="">Select Organization</option>
                                 @foreach($organizations as $organization)
-                                    <option value="{{$organization->id}}" @selected(old('organisation_id')==$organization->id)>{{$organization->name}}</option>
+                                    <option value="{{$organization->id}}" {{old('organisation_id', $user->userinfo->organisation_id) == $organization->id ? 'selected' : ''}}>{{$organization->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -228,10 +228,10 @@
                         <div class="form-group mb-3">
                         <label for="category_id" class="control-label">Category</label>
                             <select class="form-control" id="categoryId" name="category_id" aria-label=".form-select">
-                                <option selected value="">Select Category</option>
-                                <option value="1" @selected(old('category_id')=="1")>Govt. Employee</option>
-                                <option value="2" @selected(old('category_id')=="2")>Contractual</option>
-                                <option value="3" @selected(old('category_id')=="3")>Retired Govt./PSU Employee</option>
+                                <option value="0" {{old('category_id', $user->userinfo->category_id) == 0 ? 'selected' : ''}}>Select Category</option>
+                                <option value="1" {{old('category_id', $user->userinfo->category_id) == 1 ? 'selected' : ''}}>Govt. Employee</option>
+                                <option value="2" {{old('category_id', $user->userinfo->category_id) == 2 ? 'selected' : ''}}>Contractual</option>
+                                <option value="3" {{old('category_id', $user->userinfo->category_id) == 3 ? 'selected' : ''}}>Retired Govt./PSU Employee</option>
                             </select>
                         </div>
                         @error('category_id')
@@ -244,7 +244,7 @@
                             <select class="form-control" id="districtId" name="district_id" aria-label=".form-select">
                                 <option selected value="">Select District</option>    
                                 @foreach($districts as $district)
-                                    <option value="{{$district->id}}" @selected(old('district_id')==$district->id)>{{$district->name}}</option>
+                                    <option value="{{$district->id}}" {{old('district_id', $user->userinfo->district_id) == $district->id ? 'selected' : ''}}>{{$district->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -258,7 +258,7 @@
                             <select class="form-control" id="designationId" name="designation_id" aria-label=".form-select">
                                 <option selected value="">Select Designation</option>    
                                 @foreach($designations as $designation)
-                                    <option value="{{$designation->id}}" @selected(old('designation_id')==$designation->id)>{{$designation->name}}</option>
+                                    <option value="{{$designation->id}}" {{old('designation_id', $user->userinfo->designation_id) == $designation->id ? 'selected' : ''}}>{{$designation->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -271,7 +271,7 @@
         </div>
         <div class="col-12">
             <div class="form-group mb-3">
-                <input type="submit" value="Create User" class="btn btn-primary">
+                <input type="submit" value="Update User Details" class="btn btn-primary">
             </div>
         </div>
     </form>  

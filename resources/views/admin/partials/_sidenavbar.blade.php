@@ -35,8 +35,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">User:</h6>
-            <a id="createUser" class="collapse-item" href="{{ route('user.create') }}">Create User</a>
-            <a id="viewUser" class="collapse-item" href="{{ route('user.index') }}">View User</a>
+            <a id="createUser" class="collapse-item" href="{{ route('admin_users.create') }}">Create User</a>
+            <a id="viewUser" class="collapse-item" href="{{ route('admin_users.index') }}">View User</a>
             <h6 class="collapse-header">District:</h6>
             <a id="createDistrict" class="collapse-item" href="{{ route('district.create') }}">Create District</a>
             <a id="viewDistrict" class="collapse-item" href="{{ route('district.index') }}">View District</a>
