@@ -227,9 +227,111 @@ class AdminUserController extends Controller
                 }   
             }
         }
-        // else{
-            
-        // }
+        else{
+            if($request->role == 4){
+                $formFields = $request->validate([
+                    'name' => 'required|max:255',
+                    'email'=> 'required',
+                    'password' => 'required|confirmed|min:6',
+                    'role' => 'required',
+                    'phno' => ['required', 'min:10', 'max:10', Rule::unique('users','phno')],
+                ]);
+                $success = $user->update($request->all());
+                if($success){
+                    session()->flash('record-updated',$request['name']."has been updated");
+                    return redirect('/admin_users');
+                }
+                else{
+                    return redirect('/admin_users/create');//add error message here and also in create user blade
+                }
+            }
+            else{
+                $formFields = $request->validate([
+                    'name' => 'required|max:255',
+                    'email'=> 'required',
+                    'password' => 'required|confirmed|min:6',
+                    'role' => 'required',
+                    'phno' => ['required', 'min:10', 'max:10', Rule::unique('users','phno')],
+                    'gender' => 'required',
+                    'dob' => 'required',
+                    'addr' => 'required',
+                    'pincode' => 'required|max:6|min:6',
+                    'idtype' => 'required',
+                    'idno' => 'required',
+                    'ifsccode' => 'required',
+                    'bankaccno' => 'required',
+                    'project_id' => 'required',
+                    'doj' => 'required',
+                    'organisation_id' => 'required',
+                    'designation_id' => 'required',
+                    'category_id' => 'required',
+                    'district_id' => 'required',
+                ]);
+                // $success = $user->update($request->all());
+                // $formFields['addrdistrict'] = $request->addrdistrict;
+                // $formFields['state'] = $request->state;
+                // $success = $userinfo->update($request->all());
+                // if($success){
+                //     session()->flash('record-updated',$request['name']."has been updated");
+                //     return redirect('/admin_users');
+                // }
+                // else{
+                //     return redirect('/admin_users/create');//add error message here and also in create user blade
+                // }   
+            }
+
+            // if($request->role == 4){
+            //     $formFields = $request->validate([
+            //         'name' => 'required|max:255',
+            //         'email'=> 'required',
+            //         'password' => 'required|confirmed|min:6',
+            //         'role' => 'required',
+            //         'phno' => ['required', 'min:10', 'max:10', Rule::unique('users','phno')],
+            //     ]);
+            //     $success = $user->update($request->all());
+            //     if($success){
+            //         session()->flash('record-updated',$request['name']."has been updated");
+            //         return redirect('/admin_users');
+            //     }
+            //     else{
+            //         return redirect('/admin_users/create');//add error message here and also in create user blade
+            //     }
+            // }
+            // else{
+            //     $formFields = $request->validate([
+            //         'name' => 'required|max:255',
+            //         'email'=> 'required',
+            //         'password' => 'required|confirmed|min:6',
+            //         'role' => 'required',
+            //         'phno' => ['required', 'min:10', 'max:10', Rule::unique('users','phno')],
+            //         'gender' => 'required',
+            //         'dob' => 'required',
+            //         'addr' => 'required',
+            //         'pincode' => 'required|max:6|min:6',
+            //         'idtype' => 'required',
+            //         'idno' => 'required',
+            //         'ifsccode' => 'required',
+            //         'bankaccno' => 'required',
+            //         'project_id' => 'required',
+            //         'doj' => 'required',
+            //         'organisation_id' => 'required',
+            //         'designation_id' => 'required',
+            //         'category_id' => 'required',
+            //         'district_id' => 'required',
+            //     ]);
+            //     $success = $user->update($request->all());
+            //     $formFields['addrdistrict'] = $request->addrdistrict;
+            //     $formFields['state'] = $request->state;
+            //     $success = $userinfo->update($request->all());
+            //     if($success){
+            //         session()->flash('record-updated',$request['name']."has been updated");
+            //         return redirect('/admin_users');
+            //     }
+            //     else{
+            //         return redirect('/admin_users/create');//add error message here and also in create user blade
+            //     }   
+            // }  
+        }
     }
 
     /**
